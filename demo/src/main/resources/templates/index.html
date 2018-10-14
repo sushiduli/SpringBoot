@@ -1,0 +1,201 @@
+<!DOCTYPE html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div th:replace="common_header :: head"></div>
+    首页信息展示
+    <div >
+        <ol>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ol>
+        <span id="dd" v-bind:title="date">
+            {{message}}
+            <div>
+                <button v-on:click="deleteAll()">删除所有数据</button>
+                <button @click="deleteAll()">截断user表</button>
+                <button v-if="seen">显示出来</button>
+            </div>
+            <input v-model="message" type="text" />
+        </span>
+        <input type="button" id="cc" value="change">
+        <a href="/logout">退出</a>
+    </div>
+    <div id="anim">
+
+    </div>
+
+    <div id="progressBar" class="circleProgress_wrapper wrapper right left circleProgress rightcircle leftcircle ">
+    </div>
+</body>
+<style>
+.circleProgress_wrapper{
+            width: 200px;
+            height: 200px;
+            margin: 50px auto;
+            position: relative;
+            border:1px solid #ddd;
+        }
+
+.wrapper{
+    width: 100px;
+    height: 200px;
+    position: absolute;
+    top:0;
+    overflow: hidden;
+}
+.right{
+    right:0;
+}
+.left{
+    left:0;
+}
+.circleProgress{
+    width: 160px;
+    height: 160px;
+    border:20px solid rgb(232, 232, 12);
+    border-radius: 50%;
+    position: absolute;
+    top:0;
+    -webkit-transform: rotate(45deg);
+}
+.rightcircle{
+    border-top:20px solid green;
+    border-right:20px solid green;
+    right:0;
+    -webkit-animation: circleProgressLoad_right 5s linear infinite;
+}
+.leftcircle{
+    border-bottom:20px solid green;
+    border-left:20px solid green;
+    left:0;
+    -webkit-animation: circleProgressLoad_left 5s linear infinite;
+}
+@-webkit-keyframes circleProgressLoad_right{
+    0%{
+        border-top:20px solid #ED1A1A;
+        border-right:20px solid #ED1A1A;
+        -webkit-transform: rotate(45deg);
+    }
+    50%{
+        border-top:20px solid rgb(232, 232, 12);
+        border-right:20px solid rgb(232, 232, 12);
+        border-left:20px solid rgb(81, 197, 81);
+        border-bottom:20px solid rgb(81, 197, 81);
+        -webkit-transform: rotate(225deg);
+    }
+    100%{
+        border-left:20px solid green;
+        border-bottom:20px solid green;
+        -webkit-transform: rotate(225deg);
+    }
+}
+@-webkit-keyframes circleProgressLoad_left{
+    0%{
+        border-bottom:20px solid #ED1A1A;
+        border-left:20px solid #ED1A1A;
+        -webkit-transform: rotate(45deg);
+    }
+    50%{
+        border-bottom:20px solid rgb(232, 232, 12);
+        border-left:20px solid rgb(232, 232, 12);
+        border-top:20px solid rgb(81, 197, 81);
+        border-right:20px solid rgb(81, 197, 81);
+        -webkit-transform: rotate(45deg);
+    }
+    100%{
+        border-top:20px solid green;
+        border-right:20px solid green;
+        border-bottom:20px solid green;
+        border-left:20px solid green;
+        -webkit-transform: rotate(225deg);
+    }
+}
+</style>
+<style>
+#anim {
+    width: 100px;
+    height: 100px;
+    background-color: aqua;
+    position: relative;
+    animation: mymove 10s infinite;
+}
+
+@keyframes mymove
+{
+    0% {top: 0px;left: 0px;}
+    25% {top: 300px;left: 0px;}
+    50% {top: 300px;left: 500px;}
+    75% {top: 0px;left: 500px;}
+    100% {top: 0px;left: 0px;}
+    
+}
+@-moz-keyframes mymove
+{
+    from{
+        position: relative;
+        top: 0px
+    }
+    to {
+        position: relative;
+        top: 300px;
+        left: 500px;
+    }
+    
+}
+</style>
+<script>
+i = 0;
+
+var TempComponent = Vue.extend({
+    template:"<input type='button' value='click'>"
+});
+msg="aaaaaaaaaaa";
+var vm = new Vue({
+    el:"#dd",
+    data:{
+        date:new Date(),
+        message: msg,
+        info: "information",
+        seen: true
+    },
+    methods:{
+        deleteAll:function (param) { 
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: "text",
+                url: "/deleteAll",
+                data: "data",
+                success: function (result) {
+                    if(result == "0"){
+                        alert("截断表完成");
+                    }
+                    location.href="/list"
+                }
+            });
+         }
+    }
+});
+$("#cc").on("click",function () {
+    i++;
+    // var doc = new TempComponent();
+    if(i%2==0){
+        vm.message="bbbbbbbbbbbbb";
+        vm.date = new Date();
+        vm.seen=true;
+    }else{
+        vm.seen=false;
+        vm.message="aaaaaaaaaaaaa"
+    }
+  });
+</script>
+</html>

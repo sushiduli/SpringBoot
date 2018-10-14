@@ -1,0 +1,36 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.dao.UserMapper">
+    
+    <resultMap type="com.example.demo.entity.User" id="UserBaseResultMap">
+        <result property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="roleName" column="role_name"/>
+        <result property="locked" column="locked"/>
+    </resultMap>
+    <resultMap type="com.example.demo.entity.Role" id="RoleBaseResultMap">
+        <result property="roleName" column="role_name"/>
+        <collection property="permissions" ofType="java.lang.String">
+            <result column="permission_name"/>
+        </collection>  
+    </resultMap>
+
+    <insert id="insert" >
+        INSERT INTO user (username, password, role_name, locked) values (#{username},#{password},#{roleName},#{locked})
+    </insert>
+    <select id="selectUserByName" resultMap="UserBaseResultMap">
+        SELECT * FROM user where username=#{username};
+    </select>
+    <select id="listUser" resultMap="UserBaseResultMap">
+        SELECT * FROM user;
+    </select>
+    <select id="listRoles" resultMap="RoleBaseResultMap">
+        SELECT * FROM role_permission;
+    </select>
+    <delete id="deleteAll">
+        TRUNCATE user
+    </delete>
+</mapper>

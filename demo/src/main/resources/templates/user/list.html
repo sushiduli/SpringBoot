@@ -1,0 +1,41 @@
+<!DOCTYPE html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>user list</title>
+</head>
+<body>
+    <div th:replace="common_header :: head"></div>
+    <div>
+        <h2>用户列表</h2>
+        <ul th:each="item : ${userList}">
+            <li th:text="${item.username}">username</li>
+            <li th:text="${item.password}">password</li>
+            <li th:text="${item.roleName}">roleName</li>
+            <li th:text="${item.locked}">locked</li>
+        </ul>
+        <h2>角色列表</h2>
+        <ul th:each="item : ${roleList}">
+            <li th:text="${item.roleName}">roleName</li>
+            <li th:each="perm : ${item.permissions}">
+                <span th:text="${perm}"></span>
+            </li>
+        </ul>
+    </div>
+</body>
+<script>
+    $(document).re
+$.ajax({
+    type: "POST",
+    contentType: "application/json; charset=utf-8",
+    dataType: "dataType",
+    url: "url",
+    data: "data",
+    success: function (response) {
+        
+    }
+});
+</script>
+</html>
