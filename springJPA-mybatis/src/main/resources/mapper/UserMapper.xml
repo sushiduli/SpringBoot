@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kg.dao.mapper.UserMapper">
+
+    <resultMap type="com.kg.entity.User" id="BaseResultMap">
+        <result property="id" column="id"/>
+        <result property="username" column="user_name"/>
+        <result property="password" column="password"/>
+        <result property="address" column="address"/>
+        <result property="age" column="age"/>
+    </resultMap>
+
+    <select id = "getList" resultMap="BaseResultMap">
+        SELECT * FROM p_user;
+    </select>
+
+</mapper>
